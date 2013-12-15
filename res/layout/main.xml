@@ -13,7 +13,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:textSize="20dip"
-      android:text="Brews: " />
+      android:text="Stage: " />
     <TextView
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
@@ -22,33 +22,26 @@
       android:textSize="20dip"
       android:id="@+id/brew_count_label" />
   </LinearLayout>
+
   <LinearLayout
-    android:orientation="horizontal"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:gravity="center"
-    android:padding="10dip">
-    <Button
-      android:id="@+id/brew_time_down"
-      android:layout_width="wrap_content"
+      android:layout_width="fill_parent"
       android:layout_height="wrap_content"
-      android:text="-"
-      android:textSize="40dip" />
+      android:layout_weight="1"
+      android:gravity="center"
+      android:orientation="horizontal"
+      android:padding="10dip" >
+
     <TextView
       android:id="@+id/brew_time"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="0:00"
-      android:textSize="40dip"
+      android:textSize="240dip"
       android:padding="10dip" />
-    <Button
-      android:id="@+id/brew_time_up"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="+"
-      android:textSize="40dip" />
+
+
   </LinearLayout>
+
   <Button
     android:id="@+id/brew_start"
     android:layout_width="fill_parent"
