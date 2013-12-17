@@ -2,6 +2,7 @@ package com.example.brewclock;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.media.*;
 //import android.media.RingtoneManager;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import android.os.PowerManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.os.PowerManager.WakeLock;
 
@@ -19,11 +21,12 @@ public class BrewClockActivity extends Activity implements OnClickListener {
   protected Button startBrew;
   protected TextView brewCountLabel;
   protected TextView brewTimeLabel;
+  protected TextView brewStageLabel;
   PowerManager pm;
   PowerManager.WakeLock mWakeLock; 
   Uri notification;
   Ringtone r;
-  
+  public LinearLayout linearLayout;
   protected int brewTime = 3;
   protected CountDownTimer brewCountDownTimer;
   protected int brewCount = 0;
@@ -45,10 +48,18 @@ public class BrewClockActivity extends Activity implements OnClickListener {
     notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
     r = RingtoneManager.getRingtone(getApplicationContext(), notification); 
     
-    startBrew = (Button) findViewById(R.id.brew_start);
-    brewCountLabel = (TextView) findViewById(R.id.brew_count_label);
-    brewTimeLabel = (TextView) findViewById(R.id.brew_time);
+    linearLayout=(LinearLayout)this.findViewById(R.id.main_LinearLayout);
+    linearLayout.setBackgroundColor(Color.WHITE);
     
+    startBrew 		= (Button) findViewById(R.id.brew_start);
+    brewCountLabel 	= (TextView) findViewById(R.id.brew_count_label);
+    brewTimeLabel 	= (TextView) findViewById(R.id.brew_time);
+    brewStageLabel 	= (TextView) findViewById(R.id.brew_stage_label);
+    
+    brewTimeLabel.setTextColor(Color.BLACK);
+    startBrew.setTextColor(Color.BLACK);
+    brewCountLabel.setTextColor(Color.BLACK);
+    brewStageLabel.setTextColor(Color.BLACK);
     // Setup ClickListeners
     startBrew.setOnClickListener(this);
     
@@ -101,17 +112,18 @@ public class BrewClockActivity extends Activity implements OnClickListener {
 					if (is_break_time) {
 						stage_counts--;
 						is_break_time = false;
+						setBrewCount((brewCount + 1) % 4);
+						
 					} else {
 						break_counts--;
 						is_break_time = true;
 					}
-					setBrewCount((brewCount + 1) % 4);
+					
 					
 					r.play();
 				}
 
-				result = millisUntilFinished / 1000
-						- (stage_counts * 60 + break_counts * 10);
+				result = millisUntilFinished / 1000	- (stage_counts * 60 + break_counts * 10);
 				brewTimeLabel.setText(String.valueOf(result));
 			}
 
@@ -119,6 +131,8 @@ public class BrewClockActivity extends Activity implements OnClickListener {
 			public void onFinish() {
 				startBrew.setText("Start");
 				brewCountDownTimer = null;
+				brewTimeLabel.setText("60");
+				r.play();
 			}
 		};
 
@@ -136,9 +150,9 @@ public class BrewClockActivity extends Activity implements OnClickListener {
     if(brewCountDownTimer != null){
       brewCountDownTimer.cancel();
       brewCountDownTimer = null;
-    } else{
-    	brewTimeLabel.setText("Shit!");
-    }
+    } 
+    brewTimeLabel.setText("60");
+    
     startBrew.setText("Start");
     mWakeLock.release(); 
   }
