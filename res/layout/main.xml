@@ -44,10 +44,29 @@
 
   </LinearLayout>
 
-  <Button
-    android:id="@+id/brew_start"
+<LinearLayout
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="bottom"
-    android:text="Start" />
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="10dip" >
+
+    <Button
+        android:id="@+id/set_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="0.25"
+        android:text="Set" />
+
+    <Button
+        android:id="@+id/brew_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="0.25"
+        android:text="Start" />
+
+</LinearLayout>
+
 </LinearLayout>

@@ -2,9 +2,9 @@ package com.example.brewclock;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.*;
-//import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -18,7 +18,10 @@ import android.os.PowerManager.WakeLock;
 
 public class BrewClockActivity extends Activity implements OnClickListener {
   /** Properties **/
+  private static final int SetTimeActivity = 1; 
   protected Button startBrew;
+  protected Button btn_SetTime_activity;
+  
   protected TextView brewCountLabel;
   protected TextView brewTimeLabel;
   protected TextView brewStageLabel;
@@ -34,6 +37,8 @@ public class BrewClockActivity extends Activity implements OnClickListener {
   protected boolean is_break_time = false;
   protected int stage_counts = 11;
   protected int break_counts = 11;
+  protected int training_time = 60;
+  protected int break_time	  = 10;
   
   /** Called when the activity is first created. */
   @Override
@@ -51,7 +56,8 @@ public class BrewClockActivity extends Activity implements OnClickListener {
     linearLayout=(LinearLayout)this.findViewById(R.id.main_LinearLayout);
     linearLayout.setBackgroundColor(Color.WHITE);
     
-    startBrew 		= (Button) findViewById(R.id.brew_start);
+    startBrew = (Button) findViewById(R.id.brew_start);
+    btn_SetTime_activity	= (Button) findViewById(R.id.set_time);
     brewCountLabel 	= (TextView) findViewById(R.id.brew_count_label);
     brewTimeLabel 	= (TextView) findViewById(R.id.brew_time);
     brewStageLabel 	= (TextView) findViewById(R.id.brew_stage_label);
@@ -62,7 +68,7 @@ public class BrewClockActivity extends Activity implements OnClickListener {
     brewStageLabel.setTextColor(Color.BLACK);
     // Setup ClickListeners
     startBrew.setOnClickListener(this);
-    
+    btn_SetTime_activity.setOnClickListener(this);
     // Set the initial brew values
     setBrewCount(0);
     setBrewTime(60);
@@ -104,6 +110,8 @@ public class BrewClockActivity extends Activity implements OnClickListener {
 		stage_counts = 11;
 		break_counts = 11;
 		brewCount = 0;
+		setBrewCount(0);
+		btn_SetTime_activity.setClickable(false);
 		brewCountDownTimer = new CountDownTimer(830 * 1000, 1000) {
 			long result;
 
@@ -119,7 +127,6 @@ public class BrewClockActivity extends Activity implements OnClickListener {
 						is_break_time = true;
 					}
 					
-					
 					r.play();
 				}
 
@@ -133,6 +140,7 @@ public class BrewClockActivity extends Activity implements OnClickListener {
 				brewCountDownTimer = null;
 				brewTimeLabel.setText("60");
 				r.play();
+				btn_SetTime_activity.setClickable(true);
 			}
 		};
 
@@ -152,7 +160,7 @@ public class BrewClockActivity extends Activity implements OnClickListener {
       brewCountDownTimer = null;
     } 
     brewTimeLabel.setText("60");
-    
+    btn_SetTime_activity.setClickable(true);
     startBrew.setText("Start");
     mWakeLock.release(); 
   }
@@ -164,6 +172,34 @@ public class BrewClockActivity extends Activity implements OnClickListener {
         stopBrew();
       else
         startBrew();
+    } else if(v == btn_SetTime_activity){
+    	
+    	Intent intent = new Intent(BrewClockActivity.this, SetTimeActivity.class);  
+        startActivityForResult(intent, SetTimeActivity);
     }
   }
+  
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {  
+      super.onActivityResult(requestCode, resultCode, data);  
+      
+      if(requestCode == SetTimeActivity ){
+    	  if(resultCode == RESULT_OK){
+    		  training_time = data.getExtras().getInt("training time");
+    		  break_time  	= data.getExtras().getInt("break time");
+    		  brewTimeLabel.setText(String.valueOf(training_time));
+    	  }
+      }
+//      switch(requestCode)  
+//      {  
+//          case SUBACTIVITY1:  
+//              if (resultCode == RESULT_OK)  
+//              {  
+//                  Uri uriData = data.getData();  
+//                  textView.setText(uriData.toString());  
+//              }  
+//              break;  
+//          case SUBACTIVITY2:  
+//              break;  
+//      }  
+  }  
 }
