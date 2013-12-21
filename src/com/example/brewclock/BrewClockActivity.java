@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.PowerManager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -140,7 +142,7 @@ public class BrewClockActivity extends Activity implements OnClickListener {
 
 			@Override
 			public void onFinish() {
-				startBrew.setText("Start");
+				startBrew.setText("开始");
 				brewCountDownTimer = null;
 				brewTimeLabel.setText(String.valueOf(training_time));
 				r.play();
@@ -150,7 +152,7 @@ public class BrewClockActivity extends Activity implements OnClickListener {
 
 		brewCountDownTimer.start();
 		isBrewing = true;
-		startBrew.setText("Stop");
+		startBrew.setText("结束");
 		mWakeLock.acquire();
 	}
   
@@ -166,7 +168,7 @@ public class BrewClockActivity extends Activity implements OnClickListener {
 	brewTimeLabel.setText(String.valueOf(training_time));
     btn_SetTime_activity.setClickable(true);
     btn_SetTime_activity.setBackgroundResource(android.R.drawable.btn_default);
-    startBrew.setText("Start");
+    startBrew.setText("开始");
     mWakeLock.release(); 
   }
   
@@ -198,5 +200,21 @@ public class BrewClockActivity extends Activity implements OnClickListener {
     		  break_counts = times - 1;
     	  }
       }
+  }  
+  
+  public boolean onCreateOptionsMenu(Menu menu) {  
+      // TODO Auto-generated method stub  
+      menu.add(0, 1, 1, "退出");  
+      //menu.add(0, 2, 2, R.string.about);  
+      return super.onCreateOptionsMenu(menu);  
+  }  
+  
+  public boolean onOptionsItemSelected(MenuItem item) {  
+      // TODO Auto-generated method stub  
+      if(item.getItemId()==1)  
+      {  
+          finish();  
+      }
+      return super.onOptionsItemSelected(item);  
   }  
 }

@@ -14,7 +14,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:textSize="20dip"
-      android:text="Stage: "
+      android:text="阶段： "
       android:id="@+id/brew_stage_label" />
     <TextView
       android:layout_width="fill_parent"
@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_weight="0.25"
-        android:text="Set" />
+        android:text="设置" />
 
     <Button
         android:id="@+id/brew_start"
@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_weight="0.25"
-        android:text="Start" />
+        android:text="开始" />
 
 </LinearLayout>
 
