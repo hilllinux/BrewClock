@@ -39,6 +39,7 @@ public class BrewClockActivity extends Activity implements OnClickListener {
   protected int break_counts = 11;
   protected int training_time = 60;
   protected int break_time	  = 10;
+  protected int times 		  = 12;
   
   /** Called when the activity is first created. */
   @Override
@@ -66,6 +67,7 @@ public class BrewClockActivity extends Activity implements OnClickListener {
     startBrew.setTextColor(Color.BLACK);
     brewCountLabel.setTextColor(Color.BLACK);
     brewStageLabel.setTextColor(Color.BLACK);
+    
     // Setup ClickListeners
     startBrew.setOnClickListener(this);
     btn_SetTime_activity.setOnClickListener(this);
@@ -112,11 +114,13 @@ public class BrewClockActivity extends Activity implements OnClickListener {
 		brewCount = 0;
 		setBrewCount(0);
 		btn_SetTime_activity.setClickable(false);
-		brewCountDownTimer = new CountDownTimer(830 * 1000, 1000) {
+		btn_SetTime_activity.setBackgroundColor(Color.GRAY);
+		
+		brewCountDownTimer = new CountDownTimer((training_time* times + break_counts * break_time) * 1000, 1000) {
 			long result;
 
 			public void onTick(long millisUntilFinished) {
-				if (millisUntilFinished < 1000 * (stage_counts * 60 + break_counts * 10)) {
+				if (millisUntilFinished < 1000 * (stage_counts * training_time + break_counts * break_time)) {
 					if (is_break_time) {
 						stage_counts--;
 						is_break_time = false;
@@ -130,7 +134,7 @@ public class BrewClockActivity extends Activity implements OnClickListener {
 					r.play();
 				}
 
-				result = millisUntilFinished / 1000	- (stage_counts * 60 + break_counts * 10);
+				result = millisUntilFinished / 1000	- (stage_counts * training_time + break_counts * break_time);
 				brewTimeLabel.setText(String.valueOf(result));
 			}
 
@@ -138,7 +142,7 @@ public class BrewClockActivity extends Activity implements OnClickListener {
 			public void onFinish() {
 				startBrew.setText("Start");
 				brewCountDownTimer = null;
-				brewTimeLabel.setText("60");
+				brewTimeLabel.setText(String.valueOf(training_time));
 				r.play();
 				btn_SetTime_activity.setClickable(true);
 			}
@@ -159,8 +163,9 @@ public class BrewClockActivity extends Activity implements OnClickListener {
       brewCountDownTimer.cancel();
       brewCountDownTimer = null;
     } 
-    brewTimeLabel.setText("60");
+	brewTimeLabel.setText(String.valueOf(training_time));
     btn_SetTime_activity.setClickable(true);
+    btn_SetTime_activity.setBackgroundResource(android.R.drawable.btn_default);
     startBrew.setText("Start");
     mWakeLock.release(); 
   }
@@ -186,20 +191,12 @@ public class BrewClockActivity extends Activity implements OnClickListener {
     	  if(resultCode == RESULT_OK){
     		  training_time = data.getExtras().getInt("training time");
     		  break_time  	= data.getExtras().getInt("break time");
+    		  times 		= data.getExtras().getInt("times");
     		  brewTimeLabel.setText(String.valueOf(training_time));
+    		  
+    		  stage_counts = times - 1;
+    		  break_counts = times - 1;
     	  }
       }
-//      switch(requestCode)  
-//      {  
-//          case SUBACTIVITY1:  
-//              if (resultCode == RESULT_OK)  
-//              {  
-//                  Uri uriData = data.getData();  
-//                  textView.setText(uriData.toString());  
-//              }  
-//              break;  
-//          case SUBACTIVITY2:  
-//              break;  
-//      }  
   }  
 }

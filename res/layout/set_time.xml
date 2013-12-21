@@ -2,16 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:id="@+id/main_set_time">
 
 <RadioGroup  
         android:gravity="center"  
         android:orientation="horizontal"    
         android:layout_width="fill_parent"     
         android:layout_height="wrap_content"  
+        android:id="@+id/btn_group"  
         >  
         <RadioButton     
-            android:id="@+id/btn_0"    
+            android:id="@+id/btn_training"    
             android:layout_width="fill_parent"     
             android:layout_height="wrap_content"  
             android:text="训练时间"   
@@ -24,7 +26,7 @@
             android:background="@drawable/gallery_indicator"  
             />    
         <RadioButton     
-            android:id="@+id/btn_1"  
+            android:id="@+id/btn_break"  
             android:layout_width="fill_parent"     
             android:layout_height="wrap_content"  
             android:text="休息时间"  
@@ -36,7 +38,7 @@
             android:background="@drawable/gallery_indicator"  
             />    
         <RadioButton     
-            android:id="@+id/btn_2"  
+            android:id="@+id/btn_traning_time"  
             android:layout_width="fill_parent"     
             android:layout_height="wrap_content"  
             android:text="训练次数"  
@@ -51,22 +53,24 @@
         
     </RadioGroup>
 
-    <LinearLayout
-        android:layout_width="302dp"
-        android:layout_height="234dp"
-        android:layout_weight="0.35"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="10dip" >
+  <LinearLayout
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:gravity="center"
+      android:orientation="horizontal"
+      android:padding="10dip" >
 
-        <TextView
-            android:id="@+id/tran_time_set"
-            android:layout_width="wrap_content"
-            android:layout_height="174dp"
-            android:padding="10dip"
-            android:text="60"
-            android:textSize="120dp" />
-    </LinearLayout>
+    <TextView
+      android:id="@+id/display"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="60"
+      android:textSize="240dip"
+      android:padding="10dip" />
+
+
+  </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -75,10 +79,27 @@
         android:orientation="horizontal"
         android:padding="10dip" >
 
+        <Button
+            android:id="@+id/btn_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="-"
+            android:textSize="40dip" />
+
         <SeekBar
-            android:id="@+id/seekBar1"
-            android:layout_width="fill_parent"
+            android:id="@+id/seek_bar"
+            android:layout_width="210dp"
+            android:layout_weight="2"
             android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btn_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="+"
+            android:textSize="40dip" />
     </LinearLayout>
 
     <LinearLayout
@@ -93,7 +114,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_weight="0.11"
+            android:layout_weight="1"
             android:text="Default" />
 
         <Button
@@ -101,7 +122,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_weight="0.15"
+            android:layout_weight="1"
             android:text="OK" />
     </LinearLayout>
 
