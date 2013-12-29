@@ -113,6 +113,17 @@ public class SetTimeActivity extends Activity implements OnCheckedChangeListener
 			Bundle basket = new Bundle();
 			if(times < 1 )
 				times = 2;
+            switch(current_btn){
+            case R.id.btn_training:
+                training_time = currt_value;
+                break;
+            case R.id.btn_break:
+                break_time = currt_value;
+                break;
+            default:
+                times = currt_value;
+                break;
+            }
 			basket.putInt("training time", training_time);
 			basket.putInt("break time", break_time);
 			basket.putInt("times", times);
